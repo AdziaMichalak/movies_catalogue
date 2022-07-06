@@ -1,34 +1,23 @@
 {% extends "index.html" %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-lg-12 text-center">
-        <h1 class="mt-5"><b>Witaj w mojej bibliotece filmów</b></h1>
+        <h1 class="mt-5">Witaj w mojej bibliotece filmów</h1>
         <p class="lead">Znajdziesz tutaj tylko najlepsze tytuły!</p>
     </div>
-    <div class="col-lg-12 mb-4">
-        {% for type in list_types %}
-            {% if current_list == type %}
-                <a href="{{ url_for('homepage', list_type=type) }}" class="btn btn-info">{{type|replace("_", " ")|title}}</a>
-            {% else %}
-                <a href="{{ url_for('homepage', list_type=type) }}" class="btn btn-outline-info">{{type|replace("_", " ")|title}}</a>
-            {% endif %}    
-        {% endfor %}
-    </div>
     {% for movie in movies %}
- <div class="col-lg-3 col-md-6 mb-4">
-     <div class="card h-100">
-         <img class="card-img-top" src="http://placehold.it/300x500" alt="">
-         <div class="card-body">
-             <h4 class="card-title"><i>Tytuł filmu</i></h4>
-         </div>
-         <div class="card-footer text-center">
-             <a href="#" class="btn btn-primary"><b>Pokaż więcej</b></a>
-         </div>
-     </div>
- </div>
-{% endfor %}
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card h-100">
+            <img class="card-img-top" src={{ tmdb_poster_url(movie.poster_path, "w500") }} alt="">   
+            <div class="card-body" style="background: rgb(181, 182, 183); text-align: center;">
+                <h4 class="card-title" style="vertical-align: super;">{{ movie.title }}</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a href="#" class="btn btn-primary">Pokaż więcej</a>
+            </div> 
+        </div>
+    </div>
+    {% endfor %}
 </div>
-
 {% endblock %}
