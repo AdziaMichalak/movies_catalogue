@@ -3,14 +3,14 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-12 text-center">
-        <h1 class="mt-5">Witaj w mojej bibliotece filmów</h1>
+        <h1 class="mt-5">Witaj w bibliotece filmów Adzi i Ukaszka</h1>
         <p class="lead">Znajdziesz tutaj tylko najlepsze tytuły!</p>
     </div>
     <div class="col-lg-12 mb-4">
-        <a href="{{ url_for('homepage', list_type="now_playing") }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" >Now Playing</a>
-        <a href="{{ url_for('homepage', list_type="Top Rated") }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Top Rated</a>
-        <a href="{{ url_for('homepage', list_type="Popular") }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Popular</a>
-        <a href="{{ url_for('homepage', list_type="Upcoming") }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Upcoming</a>
+        {% for list in lists %}
+        <a href="{{ url_for('homepage', list_type=list) }}" class="{{'btn btn-outline-info' if list!=current_list else 'btn btn-info' }}">
+            {{list|replace("_", " ")|title}}</a>
+    {% endfor %}
         
     </div>
     {% for movie in movies %}
