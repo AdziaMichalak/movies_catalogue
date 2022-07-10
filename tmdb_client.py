@@ -2,6 +2,7 @@ from flask import Flask
 import requests
 import random
 
+
 API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzVjYzBlZWYxNTg4OGM4YTRjNjI1ZjcwMjc4ZTlmMCIsInN1YiI6IjYyYzU4NzJiZThkMDI4MDBjOWFiM2MxNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.vyREpDimE4jZ_ib1fRxB08D0cQlZI6Z5bPaRAa2vxlU"
 
 app = Flask(__name__)
@@ -66,3 +67,24 @@ def get_movie_images(movie_id):
     endpoint_2 = endpoint + "?api_key=" + API_TOKEN
     response = requests.get(endpoint_2, headers=headers)
     return response.json()
+
+def search(search_query):
+   endpoint = f"https://api.themoviedb.org/3/search/movie/?query={search_query}"
+   
+   headers = {
+       "Authorization": f"Bearer {API_TOKEN}"
+   }
+   
+   response = requests.get(endpoint, headers=headers)
+   response = response.json()
+   return response['results']
+
+def get_airing_today():
+    endpoint = f"https://api.themoviedb.org/3/tv/airing_today"
+    headers = {
+        "Authorization": f"Bearer {API_TOKEN}"
+    }
+    response = requests.get(endpoint, headers=headers)
+    response.raise_for_status()
+    response = response.json()
+    return response['results']
