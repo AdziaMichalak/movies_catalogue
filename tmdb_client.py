@@ -6,8 +6,10 @@ import os
 API_TOKEN = os.environ.get("TMDB_API_TOKEN", "")
 print("=============> ", API_TOKEN)
 
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'alamakota'
+
 
 def call_tmdb_api(endpoint):
    full_url = f"https://api.themoviedb.org/3/{endpoint}"
