@@ -2,8 +2,9 @@ from flask import Flask
 import requests
 import random
 
-
-API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzVjYzBlZWYxNTg4OGM4YTRjNjI1ZjcwMjc4ZTlmMCIsInN1YiI6IjYyYzU4NzJiZThkMDI4MDBjOWFiM2MxNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.vyREpDimE4jZ_ib1fRxB08D0cQlZI6Z5bPaRAa2vxlU"
+import os
+API_TOKEN = os.environ.get("TMDB_API_TOKEN", "")
+print("=============> ", API_TOKEN)
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'alamakota'
