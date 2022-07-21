@@ -13,7 +13,6 @@ def test_get_movies_list(monkeypatch):
    movies_list = tmdb_client.get_movies_list(list_type="popular")
    assert movies_list == mock_movies_list
 
-# Test item: Movie: Eternals, movie_id 524434
 
 # test pobierania danych z API TheMovieDB
 def test_get_single_movie1():
