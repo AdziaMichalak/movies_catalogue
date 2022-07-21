@@ -8,6 +8,15 @@ API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzVjYzBlZWYxNTg4OGM4YTRjNjI1ZjcwMj
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'alamakota'
 
+def call_tmdb_api(endpoint):
+   full_url = f"https://api.themoviedb.org/3/{endpoint}"
+   headers = {
+       "Authorization": f"Bearer {API_TOKEN}"
+   }
+   response = requests.get(full_url, headers=headers)
+   response.raise_for_status()
+   return response.json()
+
 def get_popular_movies():
     endpoint = "https://api.themoviedb.org/3/movie/popular"
     headers = {
@@ -16,25 +25,32 @@ def get_popular_movies():
     endpoint_2 = endpoint + "?api_key=" + API_TOKEN
     response = requests.get(endpoint_2, headers=headers)
     return response.json()
-    
+
 def get_movies_list(list_type):
-    endpoint = f"https://api.themoviedb.org/3/movie/{list_type}"
-    headers = {
-         "Authorization": f"Bearer {API_TOKEN}"
-    }
-    endpoint_2 = endpoint + "?api_key=" + API_TOKEN
-    response = requests.get(endpoint_2, headers=headers)
-    response.raise_for_status()
-    return response.json()
+    return call_tmdb_api(f"movie/{list_type}")
+
+#def get_movies_list(list_type):
+#    endpoint = f"https://api.themoviedb.org/3/movie/{list_type}"
+#    headers = {
+#         "Authorization": f"Bearer {API_TOKEN}"
+#    }
+#    endpoint_2 = endpoint + "?api_key=" + API_TOKEN
+#    response = requests.get(endpoint_2, headers=headers)
+#    response.raise_for_status()
+#    return response.json()
 
 def get_poster_urls(poster_api_path, size):
     tmdb_url = "https://image.tmdb.org/t/p/"
     poster_url = f"{tmdb_url}{size}{poster_api_path}"
     return poster_url
 
-def get_movies(how_many, list_type='popular'):
-    data = get_popular_movies()
-    random.shuffle(data['results'])
+#def get_movies(how_many, list_type='popular'):
+#    data = get_popular_movies()
+#    random.shuffle(data['results'])
+#    return data["results"][:how_many]
+
+def get_movies(list_type, how_many):
+    data = get_movies_list(list_type)
     return data["results"][:how_many]
 
 def get_single_movie(movie_id):
